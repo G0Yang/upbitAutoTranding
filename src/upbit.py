@@ -1,0 +1,2 @@
+def isMarket(market):
+    pass
