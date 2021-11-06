@@ -2,8 +2,8 @@ import requests
 import os
 import ast
 
-server_url = "https://api.upbit.com"
-server_version = "v1"
+server_url = os.environ['UPBIT_OPEN_API_SERVER_URL']
+server_version = os.environ['UPBIT_OPEN_API_VERSION']
 base_url = server_url + "/" + server_version
 
 headers = {"Accept": "application/json"}

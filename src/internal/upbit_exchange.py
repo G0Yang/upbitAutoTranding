@@ -8,8 +8,8 @@ import requests
 
 # access_key = os.environ['UPBIT_OPEN_API_ACCESS_KEY']
 # secret_key = os.environ['UPBIT_OPEN_API_SECRET_KEY']
-server_url = "https://api.upbit.com"
-server_version = "v1"
+server_url = os.environ['UPBIT_OPEN_API_SERVER_URL']
+server_version = os.environ['UPBIT_OPEN_API_VERSION']
 base_url = server_url + "/" + server_version
 
 def sendRequest(mathod, url, headers, params = None):
