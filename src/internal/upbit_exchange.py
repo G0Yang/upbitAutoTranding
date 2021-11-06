@@ -3,21 +3,20 @@ import jwt
 import uuid
 import hashlib
 from urllib.parse import urlencode
-
+import ast
 import requests
 
-access_key = os.environ['UPBIT_OPEN_API_ACCESS_KEY']
-secret_key = os.environ['UPBIT_OPEN_API_SECRET_KEY']
-server_url = os.environ['UPBIT_OPEN_API_SERVER_URL']
-server_version = os.environ['UPBIT_OPEN_API_VERSION']
+# access_key = os.environ['UPBIT_OPEN_API_ACCESS_KEY']
+# secret_key = os.environ['UPBIT_OPEN_API_SECRET_KEY']
+server_url = "https://api.upbit.com"
+server_version = "v1"
 base_url = server_url + "/" + server_version
-
 
 def sendRequest(mathod, url, headers, params = None):
     response = requests.request(mathod, url, headers=headers, params=params)
-    return response.test
+    return ast.literal_eval(response.text)
 
-def makeJwtToken(query):
+def makeJwtToken(query, access_key):
     m = hashlib.sha512()
     m.update(query)
     query_hash = m.hexdigest()
@@ -39,7 +38,7 @@ def addQuery(query, array):
 
 # 자산
 ## 전체 계좌 조회
-def getAllAccounts():
+def getAllAccounts(access_key, secret_key):
     payload = {
         'access_key': access_key,
         'nonce': str(uuid.uuid4()),
@@ -115,7 +114,7 @@ def postOrders(market, side, volume, price, ord_type, identifier = None):
 
 # 출금
 ## 출금 리스트 조회
-def getWithdraws(currency, state, txid_array = None, uuid_array = None, limit = None, page = None, order_by = None):
+def getWithdraws(access_key, secret_key, currency, state, txid_array = None, uuid_array = None, limit = None, page = None, order_by = None):
     query = {
         'currency': currency, # 'XRP',
         'state': state, # 'done',
@@ -129,7 +128,7 @@ def getWithdraws(currency, state, txid_array = None, uuid_array = None, limit = 
     return sendRequest('GET', base_url + "/withdraws", headers, query)
 
 ## 개별 출금 조회
-def getWithdraw(uuid_string, txid = None, currency = None):
+def getWithdraw(access_key, secret_key, uuid_string, txid = None, currency = None):
     query = {
         'uuid': uuid_string, # '9f432943-54e0-40b7-825f-b6fec8b42b79'
         'txid': txid,
@@ -141,7 +140,7 @@ def getWithdraw(uuid_string, txid = None, currency = None):
     return sendRequest('GET', base_url + "/withdraw", headers, query)
 
 ## 출금 가능 정보
-def getWithdrawsChance(currency):
+def getWithdrawsChance(access_key, secret_key, currency):
     query = {
         'currency': currency, # 'BTC',
     }
@@ -151,7 +150,7 @@ def getWithdrawsChance(currency):
     return sendRequest('GET', base_url + "/withdraws/chance", headers, query)
 
 ## 코인 출금하기
-def postWithdrawCoin(currency, amount, address, secondary_address = None, transaction_type = 'default'):
+def postWithdrawCoin(access_key, secret_key, currency, amount, address, secondary_address = None, transaction_type = 'default'):
     if transaction_type not in ['default', 'internal']:
         return False
     query = {
@@ -167,7 +166,7 @@ def postWithdrawCoin(currency, amount, address, secondary_address = None, transa
     return sendRequest('POST', base_url + "/withdraws/coin", headers, query)
 
 ## 원화 출금하기
-def postWithdrawKrw(amount):
+def postWithdrawKrw(access_key, secret_key, amount):
     query = {
         'amount': amount, # '10000',
     }
@@ -178,7 +177,7 @@ def postWithdrawKrw(amount):
 
 # 입금
 ## 입금 리스트 조회
-def getDeposits(currency, state, txid_array = None, uuid_array = None, limit = None, page = None, order_by = None):
+def getDeposits(access_key, secret_key, currency, state, txid_array = None, uuid_array = None, limit = None, page = None, order_by = None):
     query = {
         'currency': currency, # 'XRP',
         'state': state, # 'done',
@@ -192,7 +191,7 @@ def getDeposits(currency, state, txid_array = None, uuid_array = None, limit = N
     return sendRequest('GET', base_url + "/deposits", headers, query)
 
 ## 개별 입금 조회
-def getDeposit(uuid_string, txid_string = None, currency = None):
+def getDeposit(access_key, secret_key, uuid_string, txid_string = None, currency = None):
     query = {
         'uuid': uuid_string, # '94332e99-3a87-4a35-ad98-28b0c969f830',
         'txid': txid_string,
@@ -204,7 +203,7 @@ def getDeposit(uuid_string, txid_string = None, currency = None):
     return sendRequest('GET', base_url + "/deposit", headers, query)
 
 ## 입금 주소 생성 요청
-def postDepositsGenerateCoinAddress(base_url):
+def postDepositsGenerateCoinAddress(access_key, secret_key, base_url):
     query = {
         'currency': base_url, # 'BTC',
     }
@@ -214,7 +213,7 @@ def postDepositsGenerateCoinAddress(base_url):
     return sendRequest('POST', base_url + "/deposits/generate_coin_address", headers, query)
 
 ## 전체 입금 주소 조회
-def getDepositsCoinAddresses():
+def getDepositsCoinAddresses(access_key, secret_key):
     payload = {
         'access_key': access_key,
         'nonce': str(uuid.uuid4()),
@@ -225,7 +224,7 @@ def getDepositsCoinAddresses():
     return sendRequest('GET', base_url + "/deposits/coin_addresses", headers, query)
 
 ## 개별 입금 주소 조회
-def getDepositsCoinAddress(currency):
+def getDepositsCoinAddress(access_key, secret_key, currency):
     query = {
         'currency': currency, # 'BTC',
     }
@@ -235,7 +234,7 @@ def getDepositsCoinAddress(currency):
     return sendRequest('GET', base_url + "/deposits/coin_address", headers, query)
 
 ## 원화 입금하기
-def postDepositsKrw(amount):
+def postDepositsKrw(access_key, secret_key, amount):
     query = {
         'amount': amount, # '10000',
     }
@@ -246,7 +245,7 @@ def postDepositsKrw(amount):
 
 # 서비스 정보
 ## 입출금 현황
-def getStatusWallet():
+def getStatusWallet(access_key, secret_key):
     payload = {
         'access_key': access_key,
         'nonce': str(uuid.uuid4()),
@@ -257,7 +256,7 @@ def getStatusWallet():
     return sendRequest('GET', base_url + "/status/wallet", headers, query)
 
 ## API키 리스트 조회
-def getApiKeys():
+def getApiKeys(access_key, secret_key):
     payload = {
         'access_key': access_key,
         'nonce': str(uuid.uuid4()),
@@ -265,4 +264,4 @@ def getApiKeys():
     jwt_token = jwt.encode(payload, secret_key)
     authorize_token = 'Bearer {}'.format(jwt_token)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/api_keys", headers, query)
+    return sendRequest('GET', base_url + "/api_keys", headers)

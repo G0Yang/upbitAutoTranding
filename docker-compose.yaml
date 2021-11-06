@@ -1,11 +1,8 @@
 version: '3.8'
 services:
-  upbitAutTrading:
-    image: upbitAutTrading:latest
-    container_name: upbitAutTrading
-    environment:
-      - NODE_ENV=${NODE_ENV}
-      - NODE_APP_INSTANCE=${NODE_APP_INSTANCE}
+  upbitAutoTrading:
+    image: upbit_auto_trading:latest
+    container_name: upbitAutoTrading
     restart: always
     ports:
-      - "80:80"
+      - "8000:8000"

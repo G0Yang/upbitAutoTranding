@@ -1,15 +1,16 @@
 import requests
 import os
+import ast
 
-server_url = os.environ['UPBIT_OPEN_API_SERVER_URL']
-server_version = os.environ['UPBIT_OPEN_API_VERSION']
+server_url = "https://api.upbit.com"
+server_version = "v1"
 base_url = server_url + "/" + server_version
 
 headers = {"Accept": "application/json"}
 
 def getRequest(method, url, headers, params = None):
     response = requests.request(method, url, headers=headers, params=params)
-    return response.text
+    return ast.literal_eval(response.text)
 
 # 시세 종목 조회
 ## 마켓 코드 조회
