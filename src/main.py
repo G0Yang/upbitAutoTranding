@@ -1,6 +1,8 @@
-from typing import Optional
+import os
+
+
+import os
 from fastapi import FastAPI
-from pydantic import BaseModel
 from fastapi.openapi.utils import get_openapi
 
 from routers.exchange import router as exchangeRouter
@@ -13,14 +15,16 @@ app = FastAPI()
 app.include_router(exchangeRouter)
 app.include_router(quotationRouter)
 
+project_version = os.environ['PROJECT_VERSION']
+
 # set openapi
 def custom_openapi():
     if app.openapi_schema:
         return app.openapi_schema
     openapi_schema = get_openapi(
         title="upbit auto trading",
-        version="0.0.1",
-        # description="upbit auto trading api document",
+        version=project_version,
+        description="upbit auto trading api document",
         routes=app.routes,
     )
     openapi_schema["info"]["x-logo"] = {
@@ -39,5 +43,5 @@ def read_root():
 # version
 @app.get("/version")
 def version():
-    return "v0.0.1"
+    return project_version
 
