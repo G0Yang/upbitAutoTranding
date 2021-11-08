@@ -10,6 +10,7 @@ from pydantic import BaseModel
 server_url = os.environ['UPBIT_OPEN_API_SERVER_URL']
 server_version = os.environ['UPBIT_OPEN_API_VERSION']
 base_url = server_url + "/" + server_version
+
 class userApiKey(BaseModel):
     access_key: str
     secret_key: str

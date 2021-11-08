@@ -7,6 +7,7 @@ from fastapi.openapi.utils import get_openapi
 
 from routers.exchange import router as exchangeRouter
 from routers.quotation import router as quotationRouter
+from routers.server import router as serverRouter
 
 # define Server
 app = FastAPI()
@@ -14,6 +15,7 @@ app = FastAPI()
 # add Routers
 app.include_router(exchangeRouter)
 app.include_router(quotationRouter)
+app.include_router(serverRouter)
 
 project_version = os.environ['PROJECT_VERSION']
 
