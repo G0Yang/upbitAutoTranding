@@ -5,17 +5,12 @@ import uuid
 import hashlib
 from urllib.parse import urlencode
 import requests
-from pydantic import BaseModel
 
 server_url = os.environ['UPBIT_OPEN_API_SERVER_URL']
 server_version = os.environ['UPBIT_OPEN_API_VERSION']
 base_url = server_url + "/" + server_version
 
-class userApiKey(BaseModel):
-    access_key: str
-    secret_key: str
-
-def sendRequest(mathod: str, url: str, headers: str, params = None) -> any:
+async def sendRequest(mathod: str, url: str, headers: str, params = None) -> any:
     response = requests.request(mathod, url, headers=headers, params=params)
     formed_text = response.text.replace('\"', '\'')\
         .replace('true', 'True')\
@@ -45,7 +40,7 @@ def addQuery(query: dict, array) -> str:
 
 # 자산
 ## 전체 계좌 조회
-def getAllAccounts(access_key: str, secret_key: str):
+async def getAllAccounts(access_key: str, secret_key: str):
     payload = {
         'access_key': access_key,
         'nonce': str(uuid.uuid4()),
@@ -53,11 +48,11 @@ def getAllAccounts(access_key: str, secret_key: str):
     jwt_token = jwt.encode(payload, secret_key)
     authorize_token = 'Bearer {}'.format(jwt_token)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/accounts", headers)
+    return await sendRequest('GET', base_url + "/accounts", headers)
 
 # 주문
 ## 주문 가능 정보
-def getOrderChance(access_key: str, secret_key: str, market: str):
+async def getOrderChance(access_key: str, secret_key: str, market: str):
     query = {
         'market': market, # 'KRW-ETH'
     }
@@ -65,10 +60,10 @@ def getOrderChance(access_key: str, secret_key: str, market: str):
     types = type(query_string)
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/orders/chance", headers, query)
+    return await sendRequest('GET', base_url + "/orders/chance", headers, query)
 
 ## 개별 주문 조회
-def getOrder(access_key: str, secret_key: str, uuid_string: str = None, identifier: str = None):
+async def getOrder(access_key: str, secret_key: str, uuid_string: str = None, identifier: str = None):
     if(uuid_string == identifier == None):
         return False
     query = {
@@ -78,10 +73,10 @@ def getOrder(access_key: str, secret_key: str, uuid_string: str = None, identifi
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/order", headers, query)
+    return await sendRequest('GET', base_url + "/order", headers, query)
 
 ## 주문 리스트 조회
-def getOrders(access_key: str, secret_key: str, market: str, state: str, states = None, identifiers: str = None, uuid_array = None, page: int = None, limit: int = None, order_by: str = None):
+async def getOrders(access_key: str, secret_key: str, market: str, state: str, states = None, identifiers: str = None, uuid_array = None, page: int = None, limit: int = None, order_by: str = None):
     query = {
         'market': market,
         'state': state,
@@ -94,10 +89,10 @@ def getOrders(access_key: str, secret_key: str, market: str, state: str, states 
     query_string = addQuery(query, uuid_array)
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/orders", headers, query)
+    return await sendRequest('GET', base_url + "/orders", headers, query)
 
 ## 주문 취소 접수
-def deleteOrder(access_key: str, secret_key: str, uuid_string: str, identifier = None):
+async def deleteOrder(access_key: str, secret_key: str, uuid_string: str, identifier = None):
     query = {
         'uuid': uuid_string, # 'cdd92199-2897-4e14-9448-f923320408ad',
         'identifier': identifier,
@@ -105,10 +100,10 @@ def deleteOrder(access_key: str, secret_key: str, uuid_string: str, identifier =
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('DELETE', base_url + "/order", headers, query)
+    return await sendRequest('DELETE', base_url + "/order", headers, query)
 
 ## 주문하기
-def postOrders(access_key: str, secret_key: str, market: str, side: str, volume: float, price: float, ord_type: str, identifier: str = None):
+async def postOrders(access_key: str, secret_key: str, market: str, side: str, volume: float, price: float, ord_type: str, identifier: str = None):
     query = {
         'market': market, # 'KRW-BTC',
         'side': side, # 'bid',
@@ -120,11 +115,11 @@ def postOrders(access_key: str, secret_key: str, market: str, side: str, volume:
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('POST', base_url + "/orders", headers, query)
+    return await sendRequest('POST', base_url + "/orders", headers, query)
 
 # 출금
 ## 출금 리스트 조회
-def getWithdraws(access_key: str, secret_key: str, currency, state: str, txid_array = None, uuid_array = None, limit: int = None, page: int = None, order_by: str = None):
+async def getWithdraws(access_key: str, secret_key: str, currency, state: str, txid_array = None, uuid_array = None, limit: int = None, page: int = None, order_by: str = None):
     query = {
         'currency': currency, # 'XRP',
         'state': state, # 'done',
@@ -135,10 +130,10 @@ def getWithdraws(access_key: str, secret_key: str, currency, state: str, txid_ar
     query_string = addQuery(query, txid_array)
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/withdraws", headers, query)
+    return await sendRequest('GET', base_url + "/withdraws", headers, query)
 
 ## 개별 출금 조회
-def getWithdraw(access_key: str, secret_key: str, uuid_string: str, txid: str = None, currency = None):
+async def getWithdraw(access_key: str, secret_key: str, uuid_string: str, txid: str = None, currency = None):
     query = {
         'uuid': uuid_string, # '9f432943-54e0-40b7-825f-b6fec8b42b79'
         'txid': txid,
@@ -147,21 +142,21 @@ def getWithdraw(access_key: str, secret_key: str, uuid_string: str, txid: str = 
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/withdraw", headers, query)
+    return await sendRequest('GET', base_url + "/withdraw", headers, query)
 
 ## 출금 가능 정보
-def getWithdrawsChance(access_key: str, secret_key: str, currency: str = None):
+async def getWithdrawsChance(access_key: str, secret_key: str, currency: str = None):
     query = {
         'currency': currency, # 'BTC',
     }
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/withdraws/chance", headers, query)
+    return await sendRequest('GET', base_url + "/withdraws/chance", headers, query)
 
 ## 코인 출금하기
-def postWithdrawCoin(access_key: str, secret_key: str, currency: str, amount: float, address: str, secondary_address: str = None, transaction_type: str = 'default'):
-    if transaction_type not in ['default', 'internal']:
+async def postWithdrawCoin(access_key: str, secret_key: str, currency: str, amount: float, address: str, secondary_address: str = None, transaction_type: str = 'async default'):
+    if transaction_type not in ['async default', 'internal']:
         return False
     query = {
         'currency': currency, #'BTC',
@@ -173,21 +168,21 @@ def postWithdrawCoin(access_key: str, secret_key: str, currency: str, amount: fl
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('POST', base_url + "/withdraws/coin", headers, query)
+    return await sendRequest('POST', base_url + "/withdraws/coin", headers, query)
 
 ## 원화 출금하기
-def postWithdrawKrw(access_key: str, secret_key: str, amount: float):
+async def postWithdrawKrw(access_key: str, secret_key: str, amount: float):
     query = {
         'amount': amount, # '10000',
     }
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('POST', base_url + "/withdraws/krw", headers, query)
+    return await sendRequest('POST', base_url + "/withdraws/krw", headers, query)
 
 # 입금
 ## 입금 리스트 조회
-def getDeposits(access_key: str, secret_key: str, currency: str, state: str, txid_array = None, uuid_array = None, limit: int = None, page: int = None, order_by: str = None):
+async def getDeposits(access_key: str, secret_key: str, currency: str, state: str, txid_array = None, uuid_array = None, limit: int = None, page: int = None, order_by: str = None):
     query = {
         'currency': currency, # 'XRP',
         'state': state, # 'done',
@@ -198,10 +193,10 @@ def getDeposits(access_key: str, secret_key: str, currency: str, state: str, txi
     query_string = addQuery(query, txid_array)
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/deposits", headers, query)
+    return await sendRequest('GET', base_url + "/deposits", headers, query)
 
 ## 개별 입금 조회
-def getDeposit(access_key: str, secret_key: str, uuid_string: str, txid_string: str = None, currency: str = None):
+async def getDeposit(access_key: str, secret_key: str, uuid_string: str, txid_string: str = None, currency: str = None):
     query = {
         'uuid': uuid_string, # '94332e99-3a87-4a35-ad98-28b0c969f830',
         'txid': txid_string,
@@ -210,20 +205,20 @@ def getDeposit(access_key: str, secret_key: str, uuid_string: str, txid_string: 
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/deposit", headers, query)
+    return await sendRequest('GET', base_url + "/deposit", headers, query)
 
 ## 입금 주소 생성 요청
-def postDepositsGenerateCoinAddress(access_key: str, secret_key: str, base_url: str):
+async def postDepositsGenerateCoinAddress(access_key: str, secret_key: str, base_url: str):
     query = {
         'currency': base_url, # 'BTC',
     }
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('POST', base_url + "/deposits/generate_coin_address", headers, query)
+    return await sendRequest('POST', base_url + "/deposits/generate_coin_address", headers, query)
 
 ## 전체 입금 주소 조회
-def getDepositsCoinAddresses(access_key: str, secret_key: str):
+async def getDepositsCoinAddresses(access_key: str, secret_key: str):
     payload = {
         'access_key': access_key,
         'nonce': str(uuid.uuid4()),
@@ -231,31 +226,31 @@ def getDepositsCoinAddresses(access_key: str, secret_key: str):
     jwt_token = jwt.encode(payload, secret_key)
     authorize_token = 'Bearer {}'.format(jwt_token)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/deposits/coin_addresses", headers, query)
+    return await sendRequest('GET', base_url + "/deposits/coin_addresses", headers)
 
 ## 개별 입금 주소 조회
-def getDepositsCoinAddress(access_key: str, secret_key: str, currency: str):
+async def getDepositsCoinAddress(access_key: str, secret_key: str, currency: str):
     query = {
         'currency': currency, # 'BTC',
     }
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/deposits/coin_address", headers, query)
+    return await sendRequest('GET', base_url + "/deposits/coin_address", headers, query)
 
 ## 원화 입금하기
-def postDepositsKrw(access_key: str, secret_key: str, amount: float):
+async def postDepositsKrw(access_key: str, secret_key: str, amount: float):
     query = {
         'amount': amount, # '10000',
     }
     query_string = urlencode(query).encode()
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
-    return sendRequest('POST', base_url + "/deposits/krw", headers, query)
+    return await sendRequest('POST', base_url + "/deposits/krw", headers, query)
 
 # 서비스 정보
 ## 입출금 현황
-def getStatusWallet(access_key: str, secret_key: str):
+async def getStatusWallet(access_key: str, secret_key: str):
     payload = {
         'access_key': access_key,
         'nonce': str(uuid.uuid4()),
@@ -263,10 +258,10 @@ def getStatusWallet(access_key: str, secret_key: str):
     jwt_token = jwt.encode(payload, secret_key)
     authorize_token = 'Bearer {}'.format(jwt_token)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/status/wallet", headers)
+    return await sendRequest('GET', base_url + "/status/wallet", headers)
 
 ## API키 리스트 조회
-def getApiKeys(access_key: str, secret_key: str):
+async def getApiKeys(access_key: str, secret_key: str):
     payload = {
         'access_key': access_key,
         'nonce': str(uuid.uuid4()),
@@ -274,4 +269,4 @@ def getApiKeys(access_key: str, secret_key: str):
     jwt_token = jwt.encode(payload, secret_key)
     authorize_token = 'Bearer {}'.format(jwt_token)
     headers = {"Authorization": authorize_token}
-    return sendRequest('GET', base_url + "/api_keys", headers)
+    return await sendRequest('GET', base_url + "/api_keys", headers)
