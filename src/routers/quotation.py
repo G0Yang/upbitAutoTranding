@@ -20,6 +20,14 @@ async def candlesMinutes(market: str, unit: int, to: str = None, count: int = 1)
     except Exception as e:
         return errorWebResp(errorMessage= "E0000 - candlesMinutes", errorData= e.args)
     
+@router.get("/quotation/candles/pro/minutes/{unit}", tags=["quotation"])
+async def candlesMinutes(market: str, unit: int, count: int = 1):
+    try:
+        result = await getCandlesMinutes_pro(market, unit, count)
+        return createWebResp(result)
+    except Exception as e:
+        return errorWebResp(errorMessage= "E0000 - candlesMinutes", errorData= e.args)
+    
 @router.get("/quotation/candles/days", tags=["quotation"])
 async def candlesDays(market: str, to:str = None, count:int = 1):
     try:
