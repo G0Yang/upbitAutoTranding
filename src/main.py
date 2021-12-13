@@ -1,7 +1,4 @@
 import os
-
-
-import os
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 
@@ -19,6 +16,7 @@ app.include_router(serverRouter)
 
 project_version = os.environ['PROJECT_VERSION']
 
+
 # set openapi
 def custom_openapi():
     if app.openapi_schema:
@@ -35,15 +33,17 @@ def custom_openapi():
     app.openapi_schema = openapi_schema
     return app.openapi_schema
 
+
 app.openapi = custom_openapi
+
 
 # root
 @app.get("/")
 def read_root():
     return "Hello Upbit Auto Trading."
 
+
 # version
 @app.get("/version")
 def version():
     return project_version
-

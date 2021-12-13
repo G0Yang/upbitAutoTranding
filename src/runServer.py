@@ -18,11 +18,11 @@ except:
 
 if __name__ == "__main__":
     uvicorn.run(
-        app= "main:app",
-        host= str(HOST_IP),
-        port= int(HOST_PORT),
-        reload= True,
-        env_file= '../.env',
-        workers= int(HOST_THREAD),
-        #log_level= uvicorn,
+        app="main:app",
+        host=str(HOST_IP),
+        port=int(HOST_PORT),
+        reload=True,
+        env_file='../.env',
+        workers=int(HOST_THREAD),
+        # log_level= uvicorn,
     )
