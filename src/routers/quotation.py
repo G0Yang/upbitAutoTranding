@@ -1,5 +1,5 @@
-from src.utils.webResponse import createWebResp, errorWebResp
-from src.internal.upbit_quotation import *
+from utils.webResponse import createWebResp, errorWebResp
+from internal.upbit_quotation import *
 from fastapi import APIRouter
 
 router = APIRouter()

@@ -1,6 +1,6 @@
-from src.utils.webResponse import createWebResp, errorWebResp
-from src.internal.server import *
-from src.utils.struct import userApiKey
+from utils.webResponse import createWebResp, errorWebResp
+from internal.server import *
+from utils.struct import userApiKey
 from fastapi import APIRouter
 import os
 

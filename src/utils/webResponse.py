@@ -2,7 +2,7 @@ from fastapi.logger import logger
 from fastapi.responses import JSONResponse
 import logging
 
-logger = logging.getLogger("uvicorn.error")
+logger = logging.getLogger("uvicorn")
 
 
 def createWebResp(data: any, code: int = 200):
@@ -10,6 +10,7 @@ def createWebResp(data: any, code: int = 200):
         "code": code,
         "data": data,
     }
+    logger.info(webResponse)
     return JSONResponse(content=webResponse)
 
 

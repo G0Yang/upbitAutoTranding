@@ -1,5 +1,5 @@
 from threading import Thread
-from src.utils.account import account
+from utils.account import account
 import time
 import os
 

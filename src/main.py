@@ -1,6 +1,7 @@
 import os
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
+from utils.webResponse import createWebResp, errorWebResp
 
 from routers.exchange import router as exchangeRouter
 from routers.quotation import router as quotationRouter
@@ -40,10 +41,10 @@ app.openapi = custom_openapi
 # root
 @app.get("/")
 def read_root():
-    return "Hello Upbit Auto Trading."
+    return createWebResp("Hello Upbit Auto Trading.", 200)
 
 
 # version
 @app.get("/version")
 def version():
-    return project_version
+    return createWebResp(project_version, 200)

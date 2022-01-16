@@ -1,5 +1,5 @@
-import src.internal.upbit_quotation as Quotation
-import src.internal.upbit_exchange as Exchange
+import internal.upbit_quotation as Quotation
+import internal.upbit_exchange as Exchange
 
 
 class account:
