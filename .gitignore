@@ -131,5 +131,7 @@ dmypy.json
 
 src/__pycache__
 src/venv
-src/internal/__pycache__
-src/routers/__pycache__
+internal/__pycache__
+routers/__pycache__
+
+.idea

@@ -1,0 +1,10 @@
+.idea
+.env*
+.dockerignore
+
+venv
+
+Dockerfile
+docker-compose.*
+
+openapi.json

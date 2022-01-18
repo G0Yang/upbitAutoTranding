@@ -1,6 +1,6 @@
 from utils.webResponse import createWebResp, errorWebResp
 from internal.server import *
-from utils.struct import userApiKey
+from utils.struct import UserApiKey
 from fastapi import APIRouter
 import os
 
@@ -70,7 +70,7 @@ async def getServerInfo() -> bool:
 
 
 @router.put("/server/account", tags=["server"])
-async def setAccountInfo(keys: userApiKey) -> bool:
+async def setAccountInfo(keys: UserApiKey) -> bool:
     try:
         return serverd.setAccountInfo(keys.access_key, keys.secret_key)
     except Exception as e:

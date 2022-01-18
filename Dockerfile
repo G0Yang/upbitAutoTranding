@@ -3,7 +3,7 @@ MAINTAINER G0Yang<ender35841@gmail.com>
 
 WORKDIR /project/upbitAutTrading
 
-COPY ./src/ /project/upbitAutTrading/
+COPY ./ /project/upbitAutTrading/
 
 RUN pip install -r requirements.txt
 

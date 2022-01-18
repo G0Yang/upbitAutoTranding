@@ -22,7 +22,7 @@ if __name__ == "__main__":
         host=str(HOST_IP),
         port=int(HOST_PORT),
         reload=True,
-        env_file='../.env',
+        env_file='.env',
         workers=int(HOST_THREAD),
         # log_level= uvicorn,
     )

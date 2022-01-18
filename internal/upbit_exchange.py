@@ -10,8 +10,8 @@ server_version = os.environ['UPBIT_OPEN_API_VERSION']
 base_url = server_url + "/" + server_version
 
 
-async def sendRequest(mathod: str, url: str, headers: str, params=None) -> any:
-    response = requests.request(mathod, url, headers=headers, params=params)
+async def sendRequest(method: str, url: str, headers: str, params=None) -> any:
+    response = requests.request(method, url, headers=headers, params=params)
     formed_text = response.text.replace('\"', '\'') \
         .replace('true', 'True') \
         .replace('false', 'False') \
