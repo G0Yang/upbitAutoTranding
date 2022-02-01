@@ -38,7 +38,7 @@ def addQuery(query: dict, array) -> str:
     txids = array
     txids_query_string = '&'.join(["txids[]={}".format(txid) for txid in txids])
     query['txids[]'] = txids
-    return "{0}&{1}".format(query_string, txids_query_string).encode()
+    return str("{0}&{1}".format(query_string, txids_query_string).encode())
 
 
 # 자산
@@ -69,7 +69,7 @@ async def getOrderChance(access_key: str, secret_key: str, market: str):
 
 ## 개별 주문 조회
 async def getOrder(access_key: str, secret_key: str, uuid_string: str = None, identifier: str = None):
-    if (uuid_string == identifier == None):
+    if uuid_string == identifier is None:
         return False
     query = {
         'uuid': uuid_string,  # '9ca023a5-851b-4fec-9f0a-48cd83c2eaae',

@@ -2,42 +2,42 @@ import internal.upbit_quotation as Quotation
 import internal.upbit_exchange as Exchange
 
 
-class account:
+class Account:
     def __init__(
             self,
-            accessKey: str = None,
-            secretKey: str = None,
-            totalKrwBalance: int = 0,
-            selectedMarkets: list = [],
-            availableBalance: int = 0,
+            access_key: str = None,
+            secret_key: str = None,
+            total_krw_balance: int = 0,
+            selected_markets: list = [],
+            available_balance: int = 0,
     ):
-        self._accessKey = accessKey
-        self._secretKey = secretKey
-        self.totalKrwBalance = totalKrwBalance
-        self.selectedMarkets = selectedMarkets
-        self.availableBalance = availableBalance
+        self._accessKey = access_key
+        self._secretKey = secret_key
+        self.totalKrwBalance = total_krw_balance
+        self.selectedMarkets = selected_markets
+        self.availableBalance = available_balance
         self.Exchange = Exchange
         self.Quotation = Quotation
 
     @property
-    def accessKey(self) -> str:
+    def access_key(self) -> str:
         return self._accessKey
 
-    @accessKey.setter
-    def accessKey(self, accessKey: str):
-        self._accessKey = accessKey
+    @access_key.setter
+    def access_key(self, access_key: str):
+        self._accessKey = access_key
 
     @property
-    def secretKey(self) -> str:
+    def secret_key(self) -> str:
         return self._secretKey
 
-    @secretKey.setter
-    def secretKey(self, secretKey: str):
-        self._secretKey = secretKey
+    @secret_key.setter
+    def secret_key(self, secret_key: str):
+        self._secretKey = secret_key
 
-    def updateTotalKrwBalance(self) -> int:
-        allBalance = Exchange.getAllAccounts(self._accessKey, self._secretKey)
-        for balance in allBalance:
+    def update_total_krw_balance(self) -> int:
+        all_balance = Exchange.getAllAccounts(self._accessKey, self._secretKey)
+        for balance in all_balance:
             if balance.market == 'KRW':
                 return balance.balance
         return 0

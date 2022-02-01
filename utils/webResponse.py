@@ -10,7 +10,7 @@ def createWebResp(data: any, code: int = 200):
         "code": code,
         "data": data,
     }
-    logger.info(webResponse)
+    # logger.info(webResponse)
     return JSONResponse(content=webResponse)
 
 

@@ -10,7 +10,7 @@ ORDER_FEE_PERCENT = os.environ['ORDER_FEE_PERCENT']
 
 router = APIRouter()
 
-serverd = server(UPBIT_OPEN_API_ACCESS_KEY, UPBIT_OPEN_API_SECRET_KEY, 500, 5, ORDER_FEE_PERCENT, 10)
+serverd = Server(UPBIT_OPEN_API_ACCESS_KEY, UPBIT_OPEN_API_SECRET_KEY, 500, 5, ORDER_FEE_PERCENT, 10)
 
 
 @router.get("/server/state", tags=["server"])

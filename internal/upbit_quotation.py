@@ -35,7 +35,7 @@ async def getCandlesMinutes(market, unit=1, to=None, count=1):
 
 
 async def getCandlesMinutes_pro(market, unit, count):
-    if (count <= 0 or unit <= 0):
+    if count <= 0 or unit <= 0:
         return False
     now = datetime.now()
     print("start time", now.strftime("%Y-%m-%d %H:%M:%S"))
@@ -50,6 +50,7 @@ async def getCandlesMinutes_pro(market, unit, count):
             count = count - MAX_COUNT
         elif count == MAX_COUNT:
             countStamp.append(MAX_COUNT)
+            timeStemp.append(now.strftime("%Y-%m-%d %H:%M:%S"))  # 2021-11-15T07:50:00
             count = count - MAX_COUNT
         else:
             now = now - timedelta(minutes=unit * count)
@@ -58,13 +59,13 @@ async def getCandlesMinutes_pro(market, unit, count):
             count = 0
     promissAll = await asyncio.gather(
         *[getCandlesMinutes(market, unit, timeStemp[i], countStamp[i]) for i in range(0, len(timeStemp))])
-    # data = [item for sublist in promissAll for item in sublist]
-    # data.sort(key=itemgetter('timestamp'))
-    # print(len(data), timeStemp, countStamp)
-    # print(timeStemp, countStamp)
-    for i in range(0, len(timeStemp)):
-        print(timeStemp[i], countStamp[i])
-    return promissAll
+    result = []
+    if len(timeStemp) > 1:
+        for i in range(0, len(timeStemp)-1):
+            result = promissAll[i] + promissAll[i+1]
+        return result
+    else:
+        return promissAll[0]
 
 
 ## 일 캔들
