@@ -6,19 +6,19 @@ logger = logging.getLogger("uvicorn")
 
 
 def createWebResp(data: any, code: int = 200):
-    webResponse = {
+    web_response = {
         "code": code,
         "data": data,
     }
     # logger.info(webResponse)
-    return JSONResponse(content=webResponse)
+    return JSONResponse(content=web_response)
 
 
-def errorWebResp(errorMessage: str, errorData: any, code: int = 400):
-    webResponse = {
+def errorWebResp(error_message: str, error_data: any, code: int = 400):
+    web_response = {
         "code": code,
-        "message": errorMessage,
-        "errorData": errorData,
+        "message": error_message,
+        "errorData": error_data,
     }
-    logger.error(webResponse)
-    return JSONResponse(content=webResponse)
+    logger.error(web_response)
+    return JSONResponse(content=web_response)

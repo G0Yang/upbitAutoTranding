@@ -1,5 +1,5 @@
-import internal.upbit_quotation as Quotation
-import internal.upbit_exchange as Exchange
+import internal.upbit_quotation as quotation
+import internal.upbit_exchange as exchange
 
 
 class Account:
@@ -16,8 +16,8 @@ class Account:
         self.totalKrwBalance = total_krw_balance
         self.selectedMarkets = selected_markets
         self.availableBalance = available_balance
-        self.Exchange = Exchange
-        self.Quotation = Quotation
+        self.exchange = exchange
+        self.quotation = quotation
 
     @property
     def access_key(self) -> str:
@@ -36,7 +36,7 @@ class Account:
         self._secretKey = secret_key
 
     def update_total_krw_balance(self) -> int:
-        all_balance = Exchange.getAllAccounts(self._accessKey, self._secretKey)
+        all_balance = exchange.getAllAccounts(self._accessKey, self._secretKey)
         for balance in all_balance:
             if balance.market == 'KRW':
                 return balance.balance

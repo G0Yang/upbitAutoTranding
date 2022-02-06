@@ -3,9 +3,9 @@ from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 from utils.webResponse import createWebResp, errorWebResp
 
-from routers.exchange import router as exchangeRouter
-from routers.quotation import router as quotationRouter
-from routers.server import router as serverRouter
+from routers.exchange import router as exchange_router
+from routers.quotation import router as quotation_router
+from routers.server import router as server_router
 from fastapi.middleware.cors import CORSMiddleware
 
 # define Server
@@ -28,9 +28,9 @@ app.add_middleware(
 )
 
 # add Routers
-app.include_router(exchangeRouter)
-app.include_router(quotationRouter)
-app.include_router(serverRouter)
+app.include_router(exchange_router)
+app.include_router(quotation_router)
+app.include_router(server_router)
 
 project_version = os.environ['PROJECT_VERSION']
 

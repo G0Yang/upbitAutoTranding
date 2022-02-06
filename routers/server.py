@@ -18,7 +18,7 @@ async def state() -> bool:
     try:
         return createWebResp(serverd.is_alive() or serverd.isRun)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - state", errorData=e.args)
+        return errorWebResp(error_message="E0000 - state", error_data=e.args)
 
 
 @router.put("/server/markets", tags=["server"])
@@ -26,7 +26,7 @@ async def markets(markets: list) -> bool:
     try:
         return createWebResp(serverd.setMarkets(markets))
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - markets", errorData=e.args)
+        return errorWebResp(error_message="E0000 - markets", error_data=e.args)
 
 
 @router.get("/server/start", tags=["server"])
@@ -38,7 +38,7 @@ async def start() -> bool:
             serverd.start()
             return createWebResp(True)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - start", errorData=e.args)
+        return errorWebResp(error_message="E0000 - start", error_data=e.args)
 
 
 @router.get("/server/stop", tags=["server"])
@@ -50,7 +50,7 @@ async def stop(timeout: int = 10) -> bool:
             serverd.stop(timeout)
             return createWebResp(True)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - stop", errorData=e.args)
+        return errorWebResp(error_message="E0000 - stop", error_data=e.args)
 
 
 @router.get("/server/account", tags=["server"])
@@ -58,7 +58,7 @@ async def getAccountInfo() -> bool:
     try:
         return serverd.getAccountInfo()
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - getAccountInfo", errorData=e.args)
+        return errorWebResp(error_message="E0000 - getAccountInfo", error_data=e.args)
 
 
 @router.get("/server/server", tags=["server"])
@@ -66,7 +66,7 @@ async def getServerInfo() -> bool:
     try:
         return serverd.getServerInfo()
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - getServerInfo", errorData=e.args)
+        return errorWebResp(error_message="E0000 - getServerInfo", error_data=e.args)
 
 
 @router.put("/server/account", tags=["server"])
@@ -74,4 +74,4 @@ async def setAccountInfo(keys: UserApiKey) -> bool:
     try:
         return serverd.setAccountInfo(keys.access_key, keys.secret_key)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - setAccountInfo", errorData=e.args)
+        return errorWebResp(error_message="E0000 - setAccountInfo", error_data=e.args)

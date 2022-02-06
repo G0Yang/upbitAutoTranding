@@ -11,7 +11,7 @@ async def marketAll(isDetails: bool = False):
         result = await getMarketAll(isDetails)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - marketAll", errorData=e.args)
+        return errorWebResp(error_message="E0000 - marketAll", error_data=e.args)
 
 
 @router.get("/quotation/candles/minutes/{unit}", tags=["quotation"])
@@ -20,7 +20,7 @@ async def candlesMinutes(market: str, unit: int, to: str = None, count: int = 1)
         result = await getCandlesMinutes(market, unit, to, count)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - candlesMinutes", errorData=e.args)
+        return errorWebResp(error_message="E0000 - candlesMinutes", error_data=e.args)
 
 
 @router.get("/quotation/candles/pro/minutes/{unit}", tags=["quotation"])
@@ -29,7 +29,7 @@ async def candlesMinutes(market: str, unit: int, count: int = 1):
         result = await getCandlesMinutes_pro(market, unit, count)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - candlesMinutes", errorData=e.args)
+        return errorWebResp(error_message="E0000 - candlesMinutes", error_data=e.args)
 
 
 @router.get("/quotation/candles/days", tags=["quotation"])
@@ -38,7 +38,7 @@ async def candlesDays(market: str, to: str = None, count: int = 1):
         result = await getCandlesDays(market, to, count)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - candlesDays", errorData=e.args)
+        return errorWebResp(error_message="E0000 - candlesDays", error_data=e.args)
 
 
 @router.get("/quotation/candles/weeks", tags=["quotation"])
@@ -47,7 +47,7 @@ async def candleWeeks(market: str, to: str = None, count: int = 1):
         result = await getCandleWeeks(market, to, count)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - candleWeeks", errorData=e.args)
+        return errorWebResp(error_message="E0000 - candleWeeks", error_data=e.args)
 
 
 @router.get("/quotation/candles/months", tags=["quotation"])
@@ -56,7 +56,7 @@ async def candlesMonths(market: str, to: str = None, count: int = 1):
         result = await getCandlesMonths(market, to, count)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - candlesMonths", errorData=e.args)
+        return errorWebResp(error_message="E0000 - candlesMonths", error_data=e.args)
 
 
 @router.get("/quotation/tradesTicks", tags=["quotation"])
@@ -65,7 +65,7 @@ async def tradesTicks(market: str, to: str = None, count: int = 1, cursor: str =
         result = await getTradesTicks(market, to, count, cursor, daysAgo)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - tradesTicks", errorData=e.args)
+        return errorWebResp(error_message="E0000 - tradesTicks", error_data=e.args)
 
 
 @router.get("/quotation/ticker", tags=["quotation"])
@@ -74,7 +74,7 @@ async def ticker(markets: str):
         result = await getTicker(markets)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - ticker", errorData=e.args)
+        return errorWebResp(error_message="E0000 - ticker", error_data=e.args)
 
 
 @router.get("/quotation/orderbook", tags=["quotation"])
@@ -83,4 +83,4 @@ async def orderbook(markets: str):
         result = await getOrderbook(markets)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(errorMessage="E0000 - orderbook", errorData=e.args)
+        return errorWebResp(error_message="E0000 - orderbook", error_data=e.args)

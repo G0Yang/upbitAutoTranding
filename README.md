@@ -33,6 +33,10 @@ python runServer.py
 ```
 docker build -t upbit_auto_trading .
 ```
+## Build for m1
+```
+docker build --platform linux/amd64 -t upbit_auto_trading .
+```
 
 # Run api server
 ```
