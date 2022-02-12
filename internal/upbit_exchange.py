@@ -61,7 +61,6 @@ async def getOrderChance(access_key: str, secret_key: str, market: str):
         'market': market,  # 'KRW-ETH'
     }
     query_string = urlencode(query).encode()
-    types = type(query_string)
     authorize_token = makeJwtToken(access_key, secret_key, query_string)
     headers = {"Authorization": authorize_token}
     return await sendRequest('GET', base_url + "/orders/chance", headers, query)
@@ -82,8 +81,8 @@ async def getOrder(access_key: str, secret_key: str, uuid_string: str = None, id
 
 
 ## 주문 리스트 조회
-async def getOrders(access_key: str, secret_key: str, market: str, state: str, states=None, identifiers: str = None,
-                    uuid_array=None, page: int = None, limit: int = None, order_by: str = None):
+async def getOrders(access_key: str, secret_key: str, market: str, state: str = 'done', states='done', identifiers: str = None,
+                    uuid_array=None, page: int = 1, limit: int = 100, order_by: str = "desc"):
     query = {
         'market': market,
         'state': state,

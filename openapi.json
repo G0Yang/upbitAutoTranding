@@ -3,24 +3,60 @@
   "info": {
     "title": "upbit auto trading",
     "description": "upbit auto trading api document",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "x-logo": {
       "url": "https://fastapi.tiangolo.com/img/logo-margin/logo-teal.png"
     }
   },
   "paths": {
-    "/exchange/allAccounts": {
+    "/": {
       "get": {
+        "summary": "Read Root",
+        "operationId": "read_root__get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/version": {
+      "get": {
+        "summary": "Version",
+        "operationId": "version_version_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/exchange/allAccounts": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Allaccounts",
-        "operationId": "allAccounts_exchange_allAccounts_get",
+        "operationId": "allAccounts_exchange_allAccounts_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -31,7 +67,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -49,12 +87,12 @@
       }
     },
     "/exchange/orderChance": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Orderchance",
-        "operationId": "orderChance_exchange_orderChance_get",
+        "operationId": "orderChance_exchange_orderChance_post",
         "parameters": [
           {
             "required": true,
@@ -70,7 +108,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -81,7 +119,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -99,12 +139,12 @@
       }
     },
     "/exchange/order": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Order",
-        "operationId": "order_exchange_order_get",
+        "operationId": "order_exchange_order_post",
         "parameters": [
           {
             "required": false,
@@ -129,7 +169,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -140,7 +180,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -175,7 +217,8 @@
           {
             "required": false,
             "schema": {
-              "title": "Identifier"
+              "title": "Identifier",
+              "type": "string"
             },
             "name": "identifier",
             "in": "query"
@@ -185,7 +228,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -196,7 +239,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -213,16 +258,16 @@
         }
       }
     },
-    "/exchange/orders": {
-      "get": {
+    "/exchange/getOrders": {
+      "post": {
         "tags": [
           "exchange"
         ],
-        "summary": "Orders",
-        "operationId": "orders_exchange_orders_get",
+        "summary": "Get Orders",
+        "operationId": "get_orders_exchange_getOrders_post",
         "parameters": [
           {
-            "required": true,
+            "required": false,
             "schema": {
               "title": "Market",
               "type": "string"
@@ -231,7 +276,7 @@
             "in": "query"
           },
           {
-            "required": true,
+            "required": false,
             "schema": {
               "title": "State",
               "type": "string"
@@ -242,26 +287,10 @@
           {
             "required": false,
             "schema": {
-              "title": "States"
-            },
-            "name": "states",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
               "title": "Identifiers",
               "type": "string"
             },
             "name": "identifiers",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Uuid Array"
-            },
-            "name": "uuid_array",
             "in": "query"
           },
           {
@@ -296,7 +325,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/Body_get_orders_exchange_getOrders_post"
               }
             }
           },
@@ -307,7 +336,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -322,7 +353,9 @@
             }
           }
         }
-      },
+      }
+    },
+    "/exchange/orders": {
       "post": {
         "tags": [
           "exchange"
@@ -389,7 +422,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -400,7 +433,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -418,17 +453,18 @@
       }
     },
     "/exchange/withdraws": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Withdraws",
-        "operationId": "withdraws_exchange_withdraws_get",
+        "operationId": "withdraws_exchange_withdraws_post",
         "parameters": [
           {
             "required": true,
             "schema": {
-              "title": "Currency"
+              "title": "Currency",
+              "type": "string"
             },
             "name": "currency",
             "in": "query"
@@ -440,22 +476,6 @@
               "type": "string"
             },
             "name": "state",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Txid Array"
-            },
-            "name": "txid_array",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Uuid Array"
-            },
-            "name": "uuid_array",
             "in": "query"
           },
           {
@@ -490,7 +510,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/Body_withdraws_exchange_withdraws_post"
               }
             }
           },
@@ -501,7 +521,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -519,12 +541,12 @@
       }
     },
     "/exchange/withdraw": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Withdraw",
-        "operationId": "withdraw_exchange_withdraw_get",
+        "operationId": "withdraw_exchange_withdraw_post",
         "parameters": [
           {
             "required": true,
@@ -547,7 +569,8 @@
           {
             "required": false,
             "schema": {
-              "title": "Currency"
+              "title": "Currency",
+              "type": "string"
             },
             "name": "currency",
             "in": "query"
@@ -557,7 +580,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -568,7 +591,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -586,12 +611,12 @@
       }
     },
     "/exchange/withdrawsChance": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Withdrawschance",
-        "operationId": "withdrawsChance_exchange_withdrawsChance_get",
+        "operationId": "withdrawsChance_exchange_withdrawsChance_post",
         "parameters": [
           {
             "required": false,
@@ -607,7 +632,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -618,7 +643,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -694,7 +721,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -705,7 +732,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -744,7 +773,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -755,7 +784,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -773,12 +804,12 @@
       }
     },
     "/exchange/deposits": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Deposits",
-        "operationId": "deposits_exchange_deposits_get",
+        "operationId": "deposits_exchange_deposits_post",
         "parameters": [
           {
             "required": true,
@@ -796,22 +827,6 @@
               "type": "string"
             },
             "name": "state",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Txid Array"
-            },
-            "name": "txid_array",
-            "in": "query"
-          },
-          {
-            "required": false,
-            "schema": {
-              "title": "Uuid Array"
-            },
-            "name": "uuid_array",
             "in": "query"
           },
           {
@@ -846,7 +861,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/Body_deposits_exchange_deposits_post"
               }
             }
           },
@@ -857,7 +872,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -875,12 +892,12 @@
       }
     },
     "/exchange/deposit": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Deposit",
-        "operationId": "deposit_exchange_deposit_get",
+        "operationId": "deposit_exchange_deposit_post",
         "parameters": [
           {
             "required": true,
@@ -914,7 +931,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -925,7 +942,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -964,7 +983,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -975,7 +994,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -993,17 +1014,17 @@
       }
     },
     "/exchange/depositsCoinAddresses": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Depositscoinaddresses",
-        "operationId": "depositsCoinAddresses_exchange_depositsCoinAddresses_get",
+        "operationId": "depositsCoinAddresses_exchange_depositsCoinAddresses_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -1014,7 +1035,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1032,15 +1055,15 @@
       }
     },
     "/exchange/depositsCoinAddress": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Depositscoinaddress",
-        "operationId": "depositsCoinAddress_exchange_depositsCoinAddress_get",
+        "operationId": "depositsCoinAddress_exchange_depositsCoinAddress_post",
         "parameters": [
           {
-            "required": true,
+            "required": false,
             "schema": {
               "title": "Currency",
               "type": "string"
@@ -1053,7 +1076,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -1064,7 +1087,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1103,7 +1128,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -1114,7 +1139,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1132,17 +1159,17 @@
       }
     },
     "/exchange/statusWallet": {
-      "get": {
+      "post": {
         "tags": [
           "exchange"
         ],
         "summary": "Statuswallet",
-        "operationId": "statusWallet_exchange_statusWallet_get",
+        "operationId": "statusWallet_exchange_statusWallet_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -1153,7 +1180,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1170,18 +1199,18 @@
         }
       }
     },
-    "/exchange/apiKeys": {
-      "get": {
+    "/exchange/api_krys": {
+      "post": {
         "tags": [
           "exchange"
         ],
-        "summary": "Apikeys",
-        "operationId": "apiKeys_exchange_apiKeys_get",
+        "summary": "Api Krys",
+        "operationId": "api_krys_exchange_api_krys_post",
         "requestBody": {
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/userApiKey"
+                "$ref": "#/components/schemas/UserApiKey"
               }
             }
           },
@@ -1192,7 +1221,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1233,7 +1264,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1301,7 +1334,70 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/quotation/candles/pro/minutes/{unit}": {
+      "get": {
+        "tags": [
+          "quotation"
+        ],
+        "summary": "Candlesminutes",
+        "operationId": "candlesMinutes_quotation_candles_pro_minutes__unit__get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Unit",
+              "type": "integer"
+            },
+            "name": "unit",
+            "in": "path"
+          },
+          {
+            "required": true,
+            "schema": {
+              "title": "Market",
+              "type": "string"
+            },
+            "name": "market",
+            "in": "query"
+          },
+          {
+            "required": false,
+            "schema": {
+              "title": "Count",
+              "type": "integer",
+              "default": 1
+            },
+            "name": "count",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
               }
             }
           },
@@ -1360,7 +1456,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1419,7 +1517,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1478,7 +1578,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1555,7 +1657,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1595,7 +1699,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1635,7 +1741,9 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           },
@@ -1652,32 +1760,267 @@
         }
       }
     },
-    "/": {
+    "/server/state": {
       "get": {
-        "summary": "Read Root",
-        "operationId": "read_root__get",
+        "tags": [
+          "server"
+        ],
+        "summary": "State",
+        "operationId": "state_server_state_get",
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
               }
             }
           }
         }
       }
     },
-    "/version": {
-      "get": {
-        "summary": "Version",
-        "operationId": "version_version_get",
+    "/server/markets": {
+      "put": {
+        "tags": [
+          "server"
+        ],
+        "summary": "Markets",
+        "operationId": "markets_server_markets_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Markets",
+                "type": "array",
+                "items": {
+
+                }
+              }
+            }
+          },
+          "required": true
+        },
         "responses": {
           "200": {
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {}
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/server/start": {
+      "get": {
+        "tags": [
+          "server"
+        ],
+        "summary": "Start",
+        "operationId": "start_server_start_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/server/stop": {
+      "get": {
+        "tags": [
+          "server"
+        ],
+        "summary": "Stop",
+        "operationId": "stop_server_stop_get",
+        "parameters": [
+          {
+            "required": false,
+            "schema": {
+              "title": "Timeout",
+              "type": "integer",
+              "default": 10
+            },
+            "name": "timeout",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/server/account": {
+      "get": {
+        "tags": [
+          "server"
+        ],
+        "summary": "Getaccountinfo",
+        "operationId": "getAccountInfo_server_account_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "server"
+        ],
+        "summary": "Setaccountinfo",
+        "operationId": "setAccountInfo_server_account_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserApiKey"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/server/server": {
+      "get": {
+        "tags": [
+          "server"
+        ],
+        "summary": "Getserverinfo",
+        "operationId": "getServerInfo_server_server_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/utils/get_ma": {
+      "get": {
+        "tags": [
+          "utils"
+        ],
+        "summary": "Get Ma",
+        "operationId": "get_ma_utils_get_ma_get",
+        "parameters": [
+          {
+            "required": true,
+            "schema": {
+              "title": "Peiod",
+              "type": "integer"
+            },
+            "name": "peiod",
+            "in": "query"
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "title": "Data",
+                "type": "array",
+                "items": {
+
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
               }
             }
           }
@@ -1687,6 +2030,84 @@
   },
   "components": {
     "schemas": {
+      "Body_deposits_exchange_deposits_post": {
+        "title": "Body_deposits_exchange_deposits_post",
+        "required": [
+          "api_kry"
+        ],
+        "type": "object",
+        "properties": {
+          "api_kry": {
+            "$ref": "#/components/schemas/UserApiKey"
+          },
+          "txid_array": {
+            "title": "Txid Array",
+            "type": "array",
+            "items": {
+
+            }
+          },
+          "uuid_array": {
+            "title": "Uuid Array",
+            "type": "array",
+            "items": {
+
+            }
+          }
+        }
+      },
+      "Body_get_orders_exchange_getOrders_post": {
+        "title": "Body_get_orders_exchange_getOrders_post",
+        "required": [
+          "api_kry"
+        ],
+        "type": "object",
+        "properties": {
+          "api_kry": {
+            "$ref": "#/components/schemas/UserApiKey"
+          },
+          "states": {
+            "title": "States",
+            "type": "array",
+            "items": {
+
+            }
+          },
+          "uuid_array": {
+            "title": "Uuid Array",
+            "type": "array",
+            "items": {
+
+            }
+          }
+        }
+      },
+      "Body_withdraws_exchange_withdraws_post": {
+        "title": "Body_withdraws_exchange_withdraws_post",
+        "required": [
+          "api_kry"
+        ],
+        "type": "object",
+        "properties": {
+          "api_kry": {
+            "$ref": "#/components/schemas/UserApiKey"
+          },
+          "txid_array": {
+            "title": "Txid Array",
+            "type": "array",
+            "items": {
+
+            }
+          },
+          "uuid_array": {
+            "title": "Uuid Array",
+            "type": "array",
+            "items": {
+
+            }
+          }
+        }
+      },
       "HTTPValidationError": {
         "title": "HTTPValidationError",
         "type": "object",
@@ -1697,6 +2118,24 @@
             "items": {
               "$ref": "#/components/schemas/ValidationError"
             }
+          }
+        }
+      },
+      "UserApiKey": {
+        "title": "UserApiKey",
+        "required": [
+          "access_key",
+          "secret_key"
+        ],
+        "type": "object",
+        "properties": {
+          "access_key": {
+            "title": "Access Key",
+            "type": "string"
+          },
+          "secret_key": {
+            "title": "Secret Key",
+            "type": "string"
           }
         }
       },
@@ -1722,24 +2161,6 @@
           },
           "type": {
             "title": "Error Type",
-            "type": "string"
-          }
-        }
-      },
-      "userApiKey": {
-        "title": "userApiKey",
-        "required": [
-          "access_key",
-          "secret_key"
-        ],
-        "type": "object",
-        "properties": {
-          "access_key": {
-            "title": "Access Key",
-            "type": "string"
-          },
-          "secret_key": {
-            "title": "Secret Key",
             "type": "string"
           }
         }

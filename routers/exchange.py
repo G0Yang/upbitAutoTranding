@@ -7,57 +7,57 @@ router = APIRouter()
 
 
 @router.post("/exchange/allAccounts", tags=["exchange"])
-async def allAccounts(apiKey: UserApiKey) -> any:
+async def allAccounts(api_kry: UserApiKey) -> any:
     try:
-        result = await getAllAccounts(apiKey.access_key, apiKey.secret_key)
+        result = await getAllAccounts(api_kry.access_key, api_kry.secret_key)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - allAccounts", error_data=e.args)
 
 
 @router.post("/exchange/orderChance", tags=["exchange"])
-async def orderChance(apiKey: UserApiKey, market: str) -> any:
+async def orderChance(api_kry: UserApiKey, market: str) -> any:
     try:
-        result = await getOrderChance(apiKey.access_key, apiKey.secret_key, market)
+        result = await getOrderChance(api_kry.access_key, api_kry.secret_key, market)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - orderChance", error_data=e.args)
 
 
 @router.post("/exchange/order", tags=["exchange"])
-async def order(apiKey: UserApiKey, uuid_string: str = None, identifier: str = None) -> any:
+async def order(api_kry: UserApiKey, uuid_string: str = None, identifier: str = None) -> any:
     try:
-        result = await getOrder(apiKey.access_key, apiKey.secret_key, uuid_string, identifier)
+        result = await getOrder(api_kry.access_key, api_kry.secret_key, uuid_string, identifier)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - order", error_data=e.args)
 
 
-@router.post("/exchange/orders", tags=["exchange"])
-async def orders(apiKey: UserApiKey, market: str, state: str = None, states: list = None, identifiers: str = None,
+@router.post("/exchange/getOrders", tags=["exchange"])
+async def get_orders(api_kry: UserApiKey, market: str = None, state: str = None, states: list = None, identifiers: str = None,
                  uuid_array: list = None, page: int = None, limit: int = None, order_by: str = None) -> any:
     try:
-        result = await getOrders(apiKey.access_key, apiKey.secret_key, market, state, states, identifiers, uuid_array,
+        result = await getOrders(api_kry.access_key, api_kry.secret_key, market, state, states, identifiers, uuid_array,
                                  page, limit, order_by)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(error_message="E0000 - orders", error_data=e.args)
+        return errorWebResp(error_message="E0000 - get_orders", error_data=e.args)
 
 
 @router.delete("/exchange/order", tags=["exchange"])
-async def order(apiKey: UserApiKey, uuid_string: str, identifier: str = None) -> any:
+async def order(api_kry: UserApiKey, uuid_string: str, identifier: str = None) -> any:
     try:
-        result = await deleteOrder(apiKey.access_key, apiKey.secret_key, uuid_string, identifier)
+        result = await deleteOrder(api_kry.access_key, api_kry.secret_key, uuid_string, identifier)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - order", error_data=e.args)
 
 
 @router.post("/exchange/orders", tags=["exchange"])
-async def orders(apiKey: UserApiKey, market: str, side: str, volume: float, price: float, ord_type: str,
+async def orders(api_kry: UserApiKey, market: str, side: str, volume: float, price: float, ord_type: str,
                  identifier: str = None) -> any:
     try:
-        result = await postOrders(apiKey.access_key, apiKey.secret_key, market, side, volume, price, ord_type,
+        result = await postOrders(api_kry.access_key, api_kry.secret_key, market, side, volume, price, ord_type,
                                   identifier)
         return createWebResp(result)
     except Exception as e:
@@ -65,10 +65,10 @@ async def orders(apiKey: UserApiKey, market: str, side: str, volume: float, pric
 
 
 @router.post("/exchange/withdraws", tags=["exchange"])
-async def withdraws(apiKey: UserApiKey, currency: str, state: str, txid_array: list = None, uuid_array: list = None,
+async def withdraws(api_kry: UserApiKey, currency: str, state: str, txid_array: list = None, uuid_array: list = None,
                     limit: int = None, page: int = None, order_by: str = None) -> any:
     try:
-        result = await getWithdraws(apiKey.access_key, apiKey.secret_key, currency, state, txid_array, uuid_array,
+        result = await getWithdraws(api_kry.access_key, api_kry.secret_key, currency, state, txid_array, uuid_array,
                                     limit, page, order_by)
         return createWebResp(result)
     except Exception as e:
@@ -76,28 +76,28 @@ async def withdraws(apiKey: UserApiKey, currency: str, state: str, txid_array: l
 
 
 @router.post("/exchange/withdraw", tags=["exchange"])
-async def withdraw(apiKey: UserApiKey, uuid_string: str, txid: str = None, currency: str = None) -> any:
+async def withdraw(api_kry: UserApiKey, uuid_string: str, txid: str = None, currency: str = None) -> any:
     try:
-        result = await getWithdraw(apiKey.access_key, apiKey.secret_key, uuid_string, txid, currency)
+        result = await getWithdraw(api_kry.access_key, api_kry.secret_key, uuid_string, txid, currency)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - withdraw", error_data=e.args)
 
 
 @router.post("/exchange/withdrawsChance", tags=["exchange"])
-async def withdrawsChance(apiKey: UserApiKey, currency: str = None) -> any:
+async def withdrawsChance(api_kry: UserApiKey, currency: str = None) -> any:
     try:
-        result = await getWithdrawsChance(apiKey.access_key, apiKey.secret_key, currency)
+        result = await getWithdrawsChance(api_kry.access_key, api_kry.secret_key, currency)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - withdrawsChance", error_data=e.args)
 
 
 @router.post("/exchange/withdrawCoin", tags=["exchange"])
-async def withdrawCoin(apiKey: UserApiKey, currency: str, amount: float, address: str, secondary_address: str = None,
+async def withdrawCoin(api_kry: UserApiKey, currency: str, amount: float, address: str, secondary_address: str = None,
                        transaction_type: str = 'default') -> any:
     try:
-        result = await postWithdrawCoin(apiKey.access_key, apiKey.secret_key, currency, amount, address,
+        result = await postWithdrawCoin(api_kry.access_key, api_kry.secret_key, currency, amount, address,
                                         secondary_address, transaction_type)
         return createWebResp(result)
     except Exception as e:
@@ -105,19 +105,19 @@ async def withdrawCoin(apiKey: UserApiKey, currency: str, amount: float, address
 
 
 @router.post("/exchange/withdrawKrw", tags=["exchange"])
-async def withdrawKrw(apiKey: UserApiKey, amount: float) -> any:
+async def withdrawKrw(api_kry: UserApiKey, amount: float) -> any:
     try:
-        result = await postWithdrawKrw(apiKey.access_key, apiKey.secret_key, amount)
+        result = await postWithdrawKrw(api_kry.access_key, api_kry.secret_key, amount)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - withdrawKrw", error_data=e.args)
 
 
 @router.post("/exchange/deposits", tags=["exchange"])
-async def deposits(apiKey: UserApiKey, currency: str, state: str, txid_array: list = None, uuid_array: list = None,
+async def deposits(api_kry: UserApiKey, currency: str, state: str, txid_array: list = None, uuid_array: list = None,
                    limit: int = None, page: int = None, order_by: str = None) -> any:
     try:
-        result = await getDeposits(apiKey.access_key, apiKey.secret_key, currency, state, txid_array, uuid_array, limit,
+        result = await getDeposits(api_kry.access_key, api_kry.secret_key, currency, state, txid_array, uuid_array, limit,
                                    page, order_by)
         return createWebResp(result)
     except Exception as e:
@@ -125,63 +125,63 @@ async def deposits(apiKey: UserApiKey, currency: str, state: str, txid_array: li
 
 
 @router.post("/exchange/deposit", tags=["exchange"])
-async def deposit(apiKey: UserApiKey, uuid_string: str, txid_string: str = None, currency: str = None) -> any:
+async def deposit(api_kry: UserApiKey, uuid_string: str, txid_string: str = None, currency: str = None) -> any:
     try:
-        result = await getDeposit(apiKey.access_key, apiKey.secret_key, uuid_string, txid_string, currency)
+        result = await getDeposit(api_kry.access_key, api_kry.secret_key, uuid_string, txid_string, currency)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - deposit", error_data=e.args)
 
 
 @router.post("/exchange/depositsGenerateCoinAddress", tags=["exchange"])
-async def depositsGenerateCoinAddress(apiKey: UserApiKey, base_url: str) -> any:
+async def depositsGenerateCoinAddress(api_kry: UserApiKey, base_url: str) -> any:
     try:
-        result = await postDepositsGenerateCoinAddress(apiKey.access_key, apiKey.secret_key, base_url)
+        result = await postDepositsGenerateCoinAddress(api_kry.access_key, api_kry.secret_key, base_url)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - depositsGenerateCoinAddress", error_data=e.args)
 
 
 @router.post("/exchange/depositsCoinAddresses", tags=["exchange"])
-async def depositsCoinAddresses(apiKey: UserApiKey) -> any:
+async def depositsCoinAddresses(api_kry: UserApiKey) -> any:
     try:
-        result = await getDepositsCoinAddresses(apiKey.access_key, apiKey.secret_key)
+        result = await getDepositsCoinAddresses(api_kry.access_key, api_kry.secret_key)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - depositsCoinAddresses", error_data=e.args)
 
 
 @router.post("/exchange/depositsCoinAddress", tags=["exchange"])
-async def depositsCoinAddress(apiKey: UserApiKey, currency: str = None) -> any:
+async def depositsCoinAddress(api_kry: UserApiKey, currency: str = None) -> any:
     try:
-        result = await getDepositsCoinAddress(apiKey.access_key, apiKey.secret_key, currency)
+        result = await getDepositsCoinAddress(api_kry.access_key, api_kry.secret_key, currency)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - depositsCoinAddress", error_data=e.args)
 
 
 @router.post("/exchange/depositsKrw", tags=["exchange"])
-async def depositsKrw(apiKey: UserApiKey, amount: float) -> any:
+async def depositsKrw(api_kry: UserApiKey, amount: float) -> any:
     try:
-        result = await postDepositsKrw(apiKey.access_key, apiKey.secret_key, amount)
+        result = await postDepositsKrw(api_kry.access_key, api_kry.secret_key, amount)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - depositsKrw", error_data=e.args)
 
 
 @router.post("/exchange/statusWallet", tags=["exchange"])
-async def statusWallet(apiKey: UserApiKey) -> any:
+async def statusWallet(api_kry: UserApiKey) -> any:
     try:
-        result = await getStatusWallet(apiKey.access_key, apiKey.secret_key)
+        result = await getStatusWallet(api_kry.access_key, api_kry.secret_key)
         return createWebResp(result)
     except Exception as e:
         return errorWebResp(error_message="E0000 - statusWallet", error_data=e.args)
 
 
-@router.post("/exchange/apiKeys", tags=["exchange"])
-async def apiKeys(apiKey: UserApiKey) -> any:
+@router.post("/exchange/api_krys", tags=["exchange"])
+async def api_krys(api_kry: UserApiKey) -> any:
     try:
-        result = await getApiKeys(apiKey.access_key, apiKey.secret_key)
+        result = await getApiKeys(api_kry.access_key, api_kry.secret_key)
         return createWebResp(result)
     except Exception as e:
-        return errorWebResp(error_message="E0000 - apiKeys", error_data=e.args)
+        return errorWebResp(error_message="E0000 - api_krys", error_data=e.args)

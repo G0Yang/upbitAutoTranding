@@ -3,6 +3,7 @@ from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 from utils.webResponse import createWebResp, errorWebResp
 
+from routers.utils import router as utils_router
 from routers.exchange import router as exchange_router
 from routers.quotation import router as quotation_router
 from routers.server import router as server_router
@@ -27,17 +28,13 @@ app.add_middleware(
     allow_headers=["*"]
 )
 
-# add Routers
-app.include_router(exchange_router)
-app.include_router(quotation_router)
-app.include_router(server_router)
-
 project_version = os.environ['PROJECT_VERSION']
 
 
 # set openapi
 def custom_openapi():
     if app.openapi_schema:
+        print("skip setting openapi-schema.")
         return app.openapi_schema
     openapi_schema = get_openapi(
         title="upbit auto trading",
@@ -65,3 +62,10 @@ def read_root():
 @app.get("/version")
 def version():
     return createWebResp(project_version, 200)
+
+
+# add Routers
+app.include_router(exchange_router)
+app.include_router(quotation_router)
+app.include_router(server_router)
+app.include_router(utils_router)
