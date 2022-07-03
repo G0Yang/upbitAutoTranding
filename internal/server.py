@@ -16,7 +16,7 @@ class Server(Thread):
         self.tick_size: int = tick_size  # 거래 틱 간격
         self.fee: float = fee  # 거래소 수수료
         self.min_loss_per: int = min_loss_per  # 손해 하한 퍼센트
-        self.allMarkets: list = self.account.quotation.getMarketAll(True)  # 투자 가능한 마켓 정보
+        self.allMarkets: list = self.account.quotation.get_market_all(True)  # 투자 가능한 마켓 정보
 
         self.EXCHANGE_LIMIT_ORDER_PER_SECOND = os.environ['EXCHANGE_LIMIT_ORDER_PER_SECOND']
         self.EXCHANGE_LIMIT_ORDER_PER_MINUTE = os.environ['EXCHANGE_LIMIT_ORDER_PER_MINUTE']
